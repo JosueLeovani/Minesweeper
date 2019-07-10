@@ -94,7 +94,7 @@ ul, ol {
     Levels 
 -----------------------------------------*/
 
-.perra{
+.hidden{
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -107,6 +107,3 @@ ul, ol {
     padding: 10px; /* Leave a gap between the content and the borders. */  
 }
 
-/* #ok{
-    display: none;
-} */

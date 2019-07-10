@@ -23,40 +23,73 @@ function stopSeconds(){
 // ============================
 //             Levels
 // ============================
+var state = "easy"
 function generateTable(height, width) {
-    for (let i = 0; i <= height; i++){
+    for (let i = 0; i < height; i++){
         let row = document.querySelector('table').insertRow();
 
-        for (let i = 0; i <= width; i++){
+        for (let a = 0; a < width; a++){
             let cell = row.insertCell();
-            cell.className = "perra";
+            cell.className = "hidden";
         }
     }
 }
 
-function delete_table(height){
-    for(let i = 1; i < height; i++){
-        document.querySelector('table').deleteRow(1);
+function delete_table(state){
+    switch(state){
+        case "easy":
+            for(let i = 1; i < 10; i++){
+                document.querySelector('table').deleteRow(1);    
+            }
+            break;
+
+        case "medium":
+            for(let i = 1; i < 17; i++){
+                document.querySelector('table').deleteRow(1);
+            }
+            break;
+        case "hard":
+            for(let i = 1; i < 17; i++){
+                document.querySelector('table').deleteRow(1);
+            }
+            break;     
     }
 }
 
 function easy(){
-    var mine = document.getElementById("quantity_mines")
-    mine.innerHTML = 10
+    if (state === "easy"){
+        return 0
+    }
+    var mine = document.getElementById("quantity_mines");
+    mine.innerHTML = 10;
+
+    delete_table(state);
+    state = "easy";
+    generateTable(9, 9);
 }
 
 function medium(){
-    var mine = document.getElementById("quantity_mines")
-    mine.innerHTML = 40
+    if (state === "medium"){
+        return 0
+    }
+    var mine = document.getElementById("quantity_mines");
+    mine.innerHTML = 40;
 
-    delete_table(10)
+    delete_table(state);
+    state = "medium";
     generateTable(16, 16);
-    
+
 }
 
 function hard(){
-    var mine = document.getElementById("quantity_mines")
-    mine.innerHTML = 99
+    if (state === "hard"){
+        return 0
+    }
+    var mine = document.getElementById("quantity_mines");
+    mine.innerHTML = 99;
+
+    delete_table(state);
+    state = "hard";
     generateTable(16, 30);
 }
 
@@ -67,9 +100,7 @@ function custom(){
 
 
 
-// ============================
-//             Levels
-// ============================
+
 
 
 
