@@ -1,4 +1,3 @@
-
 // ============================
 //             Timer
 // ============================
@@ -23,7 +22,7 @@ function stopSeconds(){
 // ============================
 //             Levels
 // ============================
-var state = "easy"
+var state = "none"
 function generateTable(height, width) {
     for (let i = 0; i < height; i++){
         let row = document.querySelector('table').insertRow();
@@ -112,12 +111,24 @@ function getRandomInt(max) { //Crea un numero aleatoria en el rango que le ponga
   }
 
 function mineRandom(quantity, size){
-    for (let i = 0; i < quantity; i++){ //llena el board con minas en posiciones aleatorias
-        elems[getRandomInt(size)].innerHTML = "J";
+    for (let i = 0; i < quantity; ){ //llena el board con minas en posiciones aleatorias
+        let random = getRandomInt(size);
+        if(elems[random].innerHTML != "J"){
+            elems[random].innerHTML = "J";
+            i++;
+        }
     }
 }
 
+easy();
 
+let i = 0;
+for (elem of elems){
+    if (elem.innerHTML === "J"){
+        i = i + 1;
+    };
+}
+console.log(i);
 
 
 
