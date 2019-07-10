@@ -66,6 +66,7 @@ function easy(){
     delete_table(state);
     state = "easy";
     generateTable(9, 9);
+    mineRandom(10, 9*9);
 }
 
 function medium(){
@@ -78,7 +79,7 @@ function medium(){
     delete_table(state);
     state = "medium";
     generateTable(16, 16);
-
+    mineRandom(40, 16*16);
 }
 
 function hard(){
@@ -91,6 +92,7 @@ function hard(){
     delete_table(state);
     state = "hard";
     generateTable(16, 30);
+    mineRandom(99, 16*30);
 }
 
 function custom(){
@@ -109,9 +111,12 @@ function getRandomInt(max) { //Crea un numero aleatoria en el rango que le ponga
     return Math.floor(Math.random() * Math.floor(max));
   }
 
-for (let i = 0; i <= 10; i++){ //llena el board con minas en posiciones aleatorias
-    elems[getRandomInt(81)].innerHTML = "J";
+function mineRandom(quantity, size){
+    for (let i = 0; i < quantity; i++){ //llena el board con minas en posiciones aleatorias
+        elems[getRandomInt(size)].innerHTML = "J";
+    }
 }
+
 
 
 
