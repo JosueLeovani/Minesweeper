@@ -1,3 +1,6 @@
+
+var state = "none"
+let board_state = [];
 // ============================
 //             Timer
 // ============================
@@ -10,11 +13,31 @@ function incrementSeconds() {
     el.innerText = seconds;
 }
 
-var cancel = setInterval(incrementSeconds, 1000);
 
-function stopSeconds(){
-    clearTimeout(cancel);
-    seconds = 0
+
+function reset(){
+
+    console.log(state)
+    switch(state){
+        case "easy":
+            easy();
+            break;
+        case "medium":
+            medium();
+            break; 
+        case "hard":
+            hard();
+            break;
+        case "custom":
+            custom();
+            break;
+        case "none":
+            console.log("hello");
+            break;
+    }
+    var cancel = setInterval(incrementSeconds, 1000);
+    // clearTimeout(cancel);
+    // seconds = 0
 }
 
 
@@ -22,14 +45,18 @@ function stopSeconds(){
 // ============================
 //             Levels
 // ============================
-var state = "none"
-function generateTable(height, width) {
+
+function generateTable(height, width) { //genera al mismo tiempo el board_state
+    board_state = [];
     for (let i = 0; i < height; i++){
         let row = document.querySelector('table').insertRow();
-
+        board_state.push([]);
+        row.className = "row";
         for (let a = 0; a < width; a++){
             let cell = row.insertCell();
+            board_state[i].push(0);
             cell.className = "hidden";
+            cell.id = `${i}${a}`;
         }
     }
 }
@@ -56,9 +83,6 @@ function delete_table(state){
 }
 
 function easy(){
-    if (state === "easy"){
-        return 0
-    }
     var mine = document.getElementById("quantity_mines");
     mine.innerHTML = 10;
 
@@ -69,9 +93,6 @@ function easy(){
 }
 
 function medium(){
-    if (state === "medium"){
-        return 0
-    }
     var mine = document.getElementById("quantity_mines");
     mine.innerHTML = 40;
 
@@ -82,9 +103,6 @@ function medium(){
 }
 
 function hard(){
-    if (state === "hard"){
-        return 0
-    }
     var mine = document.getElementById("quantity_mines");
     mine.innerHTML = 99;
 
@@ -97,6 +115,7 @@ function hard(){
 function custom(){
     var mine = document.getElementById("quantity_mines")
     mine.innerHTML = "en trabajo (┛◉Д◉)┛彡┻━┻"
+    state = "custom";
 }
 
 
@@ -122,19 +141,42 @@ function mineRandom(quantity, size){
 
 easy();
 
-let i = 0;
-for (elem of elems){
-    if (elem.innerHTML === "J"){
-        i = i + 1;
-    };
+// let i = 0;    //esto es para probar 
+// for (elem of elems){ //que ponga la cantida de minas correctamente
+//     if (elem.innerHTML === "J"){
+//         i = i + 1;
+//     };
+// }
+// console.log(i);
+
+
+
+// ============================
+//     First Click Algorithm
+// ============================
+let first_click = false;
+let board = [];
+let seeker = [[-1, -1], [-1, 0], [-1, +1], [0, -1], [0, +1], [+1, -1], [+1, 0], [+1, +1]];
+
+
+//trae la tabla de html a un array bidimensional para poder interactuar
+let get_rows = document.getElementsByClassName('row');
+for (rows of get_rows){
+    board.push(rows.cells);
 }
-console.log(i);
 
 
 
+for (k of board){
+    for(i of k){
+        i.addEventListener("click", ((a) => {
+            a = i.id
+            console.log();
+        }));
 
 
-
+    }
+}
 
 
 

@@ -21,10 +21,11 @@ table{
     border-right-color: rgb(2, 183, 255);
     border-bottom-color: rgb(162, 0, 255);
     border-left-color: rgb(162, 0, 255);
-    padding: 10px; /* Leave a gap between the content and the borders. */  
+    padding: 10px;
+    text-align: center;
 }
 
-.hiddenplace:hover{
+.hidden:hover{
     background-color: rgb(160, 160, 160);
 }
 
