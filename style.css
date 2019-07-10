@@ -11,7 +11,7 @@ table{
     border-left-color: rgb(162, 0, 255);
 }
 
-.hiddenplace{
+.hidden{
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -23,7 +23,6 @@ table{
     border-left-color: rgb(162, 0, 255);
     padding: 10px; /* Leave a gap between the content and the borders. */  
 }
-
 
 .hiddenplace:hover{
     background-color: rgb(160, 160, 160);
@@ -90,20 +89,7 @@ ul, ol {
 }
 
 
-/* -----------------------------------------
-    Levels 
------------------------------------------*/
 
-.hidden{
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: rgb(199, 199, 199);
-    border: 3px outset;
-    border-top-color: rgb(2, 183, 255);
-    border-right-color: rgb(2, 183, 255);
-    border-bottom-color: rgb(162, 0, 255);
-    border-left-color: rgb(162, 0, 255);
-    padding: 10px; /* Leave a gap between the content and the borders. */  
-}
+
+
 

@@ -100,6 +100,20 @@ function custom(){
 
 
 
+// ============================
+//         Mines Random
+// ============================
+let elems = document.getElementsByClassName('hidden');
+
+function getRandomInt(max) { //Crea un numero aleatoria en el rango que le pongas
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+for (let i = 0; i <= 10; i++){ //llena el board con minas en posiciones aleatorias
+    elems[getRandomInt(81)].innerHTML = "J";
+}
+
+
 
 
 
