@@ -1,5 +1,6 @@
 
-var state = "none"
+var state = "none";
+let board = [];
 let board_state = [];
 // ============================
 //             Timer
@@ -56,9 +57,19 @@ function generateTable(height, width) { //genera al mismo tiempo el board_state
             let cell = row.insertCell();
             board_state[i].push(0);
             cell.className = "hidden";
-            cell.id = `${i}${a}`;
+            if(i > 9){
+                cell.id = `${i}+${a}`;
+            }else{
+                cell.id = `${i}${a}`;
+            }
+            
         }
     }
+    let get_rows = document.getElementsByClassName('row');
+    for (rows of get_rows){
+        board.push(rows.cells);
+    }
+
 }
 
 function delete_table(state){
@@ -90,6 +101,7 @@ function easy(){
     state = "easy";
     generateTable(9, 9);
     mineRandom(10, 9*9);
+    even_call();
 }
 
 function medium(){
@@ -100,6 +112,7 @@ function medium(){
     state = "medium";
     generateTable(16, 16);
     mineRandom(40, 16*16);
+    even_call();
 }
 
 function hard(){
@@ -110,6 +123,7 @@ function hard(){
     state = "hard";
     generateTable(16, 30);
     mineRandom(99, 16*30);
+    even_call();
 }
 
 function custom(){
@@ -139,7 +153,7 @@ function mineRandom(quantity, size){
     }
 }
 
-easy();
+medium();
 
 // let i = 0;    //esto es para probar 
 // for (elem of elems){ //que ponga la cantida de minas correctamente
@@ -155,28 +169,124 @@ easy();
 //     First Click Algorithm
 // ============================
 let first_click = false;
-let board = [];
 let seeker = [[-1, -1], [-1, 0], [-1, +1], [0, -1], [0, +1], [+1, -1], [+1, 0], [+1, +1]];
 
 
-//trae la tabla de html a un array bidimensional para poder interactuar
-let get_rows = document.getElementsByClassName('row');
-for (rows of get_rows){
-    board.push(rows.cells);
-}
+function even_call(){
+    board.forEach((fila)=>{
+        [...fila].forEach((casilla) => { //[...value] conver the html conetion to a array
+            casilla.addEventListener("click", (() => {
+                let pos = casilla.id;
+                first_mine(pos, casilla);
+            }));
+        });
+    })
+}    
 
+function first_mine(pos, casilla){
+    let place = document.getElementById(pos).innerHTML;
 
+    if (place === "J"){
+        console.log("You Died");
+        return 0
+    }
 
-for (k of board){
-    for(i of k){
-        i.addEventListener("click", ((a) => {
-            a = i.id
-            console.log();
-        }));
-
-
+    let pos_abya = get_adyacentes(pos, casilla);
+    let count = 0
+    pos_abya.forEach((elementos) => {
+        let elem =document.getElementById(elementos).innerHTML;
+        if (elem === "J"){
+            count++;
+        }
+    })
+    
+    if (count != 0){
+        document.getElementById(pos).innerHTML = count;
+    }else{
+        return "hello"
+        // space_whites(pos);
     }
 }
+
+function space_whites(pos){
+
+
+    let pos_abya = get_adyacentes(pos);
+    console.log(pos_abya);
+    // let count = 0
+    // pos_abya.forEach((elementos) => {
+    //     let elem =document.getElementById(elementos).innerHTML;
+    //     if (elem === "J"){
+    //         count++;
+    //     }
+    // })
+    
+    // if (count != 0){
+    //     document.getElementById(pos).innerHTML = count;
+    // }else{
+    //     document.getElementById(pos).innerHTML = "";
+    // }
+}
+
+
+function get_adyacentes(pos, casilla){
+    let array_pos = [];
+    let array_state = [];
+    switch(pos.length){
+        case 2:
+            seeker.forEach((see) => {
+                let x = Number(pos[0]) + see[0];
+                let y = Number(pos[1]) + see[1];
+                if (x < 0 || y < 0 || x > board_state[0].length - 1 || y > board_state.length - 1){
+                    return 0
+                }
+                array_pos.push(x.toString() + y.toString());
+                if (board_state[x][y] === 1){
+                    return true
+                };
+                board_state[x][y] = 1;
+            })
+            return array_pos
+            break;
+            
+        case 3:
+            board.forEach((places) => {
+                console.log([...places].indexOf(casilla));
+            });
+            seeker.forEach((see) => {
+                let x = Number(pos[0]) + see[0];
+                let y = Number(pos[1] + pos[2]) + see[1];
+                if (x < 0 || y < 0 || x > board_state[0].length - 1 || y > board_state.length - 1){
+                    return 0
+                }
+                array_pos.push(x.toString() + y.toString());
+                if (board_state[x][y] === 1){
+                    return true
+                };
+                board_state[x][y] = 1;
+            })
+            return array_pos
+            break;
+        case 5:
+            seeker.forEach((see) => {
+                let x = Number(pos[0] + pos[1]) + see[0];
+                let y = Number(pos[3] + pos[4]) + see[1];
+                if (x < 0 || y < 0 || x > board_state[0].length - 1 || y > board_state.length - 1){
+                    return 0
+                }
+                array_pos.push(x.toString() + y.toString());
+                if (board_state[x][y] === 1){
+                    return true
+                };
+                board_state[x][y] = 1;
+            })
+            return array_pos
+            break;
+    };
+    
+};
+
+
 
 
 
