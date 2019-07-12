@@ -57,6 +57,7 @@ function generateTable(height, width) { //genera al mismo tiempo el board_state
             let cell = row.insertCell();
             board_state[i].push(0);
             cell.className = "hidden";
+            cell.innerHTML = "";
             if(i > 9){
                 cell.id = `${i}+${a}`;
             }else{
@@ -146,10 +147,15 @@ function getRandomInt(max) { //Crea un numero aleatoria en el rango que le ponga
 function mineRandom(quantity, size){
     for (let i = 0; i < quantity; ){ //llena el board con minas en posiciones aleatorias
         let random = getRandomInt(size);
-        if(elems[random].innerHTML != "J"){
-            elems[random].innerHTML = "J";
-            i++;
+        console.log(random, elems[random]);
+        if (elems[random] != null){
+            if(elems[random].innerHTML != "J"){
+                elems[random].innerHTML = "J";
+                elems[random].className = "hidden";
+                i++;
+            }
         }
+        
     }
 }
 
@@ -187,7 +193,7 @@ function first_mine(pos, state){
     let place = document.getElementById(pos).innerHTML;
 
     if (place === "J"){
-        console.log("You Died");
+        alert("You Died");
         return 0
     }
 
@@ -205,46 +211,54 @@ function first_mine(pos, state){
     
     if (count != 0){
         document.getElementById(pos).innerHTML = count;
-    }else{
-        space_whites(pos);
-    }
-}
-
-function space_whites(pos){
-
-
-    let pos_abya = get_adyacentes(pos);
-    if(pos_abya === true){
-        return 0
-    }
-    let count = 0
-    pos_abya.forEach((elementos) => {
-        let elem =document.getElementById(elementos).innerHTML;
-        if (elem === "J"){
-            count++;
-        }
-    })
-    
-    if (count != 0){
-        document.getElementById(pos).innerHTML = count;
+        document.getElementById(pos).className = "visible";
         return 0
     }else{
-        console.log("aqui");
         document.getElementById(pos).innerHTML = "";
+        document.getElementById(pos).className = "visible";
         pos_abya.forEach((pos)=>{
-            console.log(pos);
-            space_whites(pos);
+            first_mine(pos);
         })
     }
 }
 
+// function space_whites(pos){
 
+//     let pos_abya = get_adyacentes(pos);
+//     if(pos_abya === true){
+//         return 0
+//     }
+//     let count = 0
+//     pos_abya.forEach((elementos) => {
+//         let elem =document.getElementById(elementos).innerHTML;
+//         if (elem === "J"){
+//             count++;
+//         }
+//     })
+    
+//     if (count != 0){
+//         document.getElementById(pos).innerHTML = count;
+
+//     }else{
+//         console.log("aqui");
+//         document.getElementById(pos).innerHTML = "";
+        
+//     }
+// }
+
+// function convert_pos(pos, size){
+//     switch (size){
+//         case 2:
+
+//             break;
+//     }
+// }
 function get_adyacentes(pos){
     let array_pos = [];
     let array_state = [];
     switch(pos.length){
         case 2:
-            if (board_state[pos[0]][pos[1]] === 1 & board[pos[0]][pos[1]].innerHTML != ""){
+            if (board_state[pos[0]][pos[1]] === 1 & board[pos[0]][pos[1]] != ""){
                 return true
             }else{
                 board_state[pos[0]][pos[1]] = 1;
@@ -268,7 +282,7 @@ function get_adyacentes(pos){
             break;
             
         case 3:
-            if(board_state[pos[0]][pos[1] + pos[2]] === 1 & board[pos[0]][pos[1] + pos[2]].innerHTML != ""){
+            if(board_state[pos[0]][pos[1] + pos[2]] === 1 & board[pos[0]][pos[1] + pos[2]] != ""){
                 return true
             }else{
                 board_state[pos[0]][pos[1] + pos[2]] = 1;
@@ -288,7 +302,7 @@ function get_adyacentes(pos){
             return array_pos
             break;
         case 4:
-            if(board_state[pos[0] + pos[1]][pos[3]] === 1 & board[pos[0] + pos[1]][pos[3]].innerHTML != ""){
+            if(board_state[pos[0] + pos[1]][pos[3]] === 1 & board[pos[0] + pos[1]][pos[3]] != ""){
                 return true
             }else{
                 board_state[pos[0] + pos[1]][pos[3]] = 1;
@@ -308,7 +322,7 @@ function get_adyacentes(pos){
             return array_pos
             break;
         case 5:
-            if(board_state[pos[0] + pos[1]][pos[3] + pos[4]] === 1 & board[pos[0] + pos[1]][pos[3] + pos[4]].innerHTML != ""){
+            if(board_state[pos[0] + pos[1]][pos[3] + pos[4]] === 1 & board[pos[0] + pos[1]][pos[3] + pos[4]] != ""){
                 return true
             }else{
                 board_state[pos[0] + pos[1]][pos[3] + pos[4]] = 1;

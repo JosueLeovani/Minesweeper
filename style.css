@@ -23,10 +23,30 @@ table{
     border-left-color: rgb(162, 0, 255);
     padding: 10px;
     text-align: center;
+    color: rgb(199, 199, 199);
+}
+
+.visible{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(156, 156, 156);
+    border: 3px outset;
+    border-top-color: rgb(2, 183, 255);
+    border-right-color: rgb(2, 183, 255);
+    border-bottom-color: rgb(162, 0, 255);
+    border-left-color: rgb(162, 0, 255);
+    padding: 10px;
+    text-align: center;
 }
 
 .hidden:hover{
     background-color: rgb(160, 160, 160);
+}
+
+.visible:hover{
+    /* background-color: rgb(160, 160, 160); */
+    background-color: rgb(0, 195, 255);
 }
 
 #opciones{
