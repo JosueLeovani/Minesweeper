@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>MineSweeper</title>
+</head>
+<body>  
+    
+    <table class="ok">
+
+        <tr id="opciones">
+            <td class="buttoms">
+                    <ul class="nav">
+                            <li>Levels
+                                <ul id="levels">
+                                    <li id="easy" onclick="easy()">Easy</li>
+                                    <li id="medium" onclick="medium()">Medium</li>
+                                    <li id="hard" onclick="hard()">Hard</li>
+                                    <li id="custom" onclick="custom()">Custom</li>
+                                </ul>
+                            </li>
+                        </ul>
+            </td>
+            <td class="buttoms" id="face" onclick="reset()">(~˘▾˘)~</td>
+            <td id="data">
+                <div class="buttoms" id="seconds-counter">0</div>
+                <div class="buttoms" id="quantity_mines">10</div>
+            </td>
+        </tr>
+
+    </table>
+
+    <script src="apps.js"></script>
+</body>
+</html>
