@@ -17,8 +17,6 @@ function incrementSeconds() {
 
 
 function reset(){
-
-    console.log(state)
     switch(state){
         case "easy":
             easy();
@@ -36,6 +34,7 @@ function reset(){
             console.log("hello");
             break;
     }
+    
     var cancel = setInterval(incrementSeconds, 1000);
     // clearTimeout(cancel);
     // seconds = 0
@@ -147,7 +146,6 @@ function getRandomInt(max) { //Crea un numero aleatoria en el rango que le ponga
 function mineRandom(quantity, size){
     for (let i = 0; i < quantity; ){ //llena el board con minas en posiciones aleatorias
         let random = getRandomInt(size);
-        console.log(random, elems[random]);
         if (elems[random] != null){
             if(elems[random].innerHTML != "J"){
                 elems[random].innerHTML = "J";
@@ -181,10 +179,21 @@ let seeker = [[-1, -1], [-1, 0], [-1, +1], [0, -1], [0, +1], [+1, -1], [+1, 0], 
 function even_call(){
     board.forEach((fila)=>{
         [...fila].forEach((casilla) => { //[...value] conver the html conetion to a array
+            if (document.addEventListener) {
+                document.addEventListener('contextmenu', function (e) {
+                    e.preventDefault();
+                }, false);
+            } else {
+                document.attachEvent('oncontextmenu', function () {
+                    window.event.returnValue = false;
+                });
+            }
             casilla.addEventListener("click", (() => {
                 let pos = casilla.id;
+                console.log(event.button);
                 first_mine(pos,state);
             }));
+            
         });
     })
 }    
@@ -194,6 +203,8 @@ function first_mine(pos, state){
 
     if (place === "J"){
         alert("You Died");
+        seconds = 0;
+        reset();
         return 0
     }
 

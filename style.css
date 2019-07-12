@@ -41,6 +41,7 @@ table{
 }
 
 .hidden:hover{
+    color: rgb(160, 160, 160);
     background-color: rgb(160, 160, 160);
 }
 
