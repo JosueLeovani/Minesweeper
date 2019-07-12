@@ -153,7 +153,7 @@ function mineRandom(quantity, size){
     }
 }
 
-medium();
+easy();
 
 // let i = 0;    //esto es para probar 
 // for (elem of elems){ //que ponga la cantida de minas correctamente
@@ -177,13 +177,13 @@ function even_call(){
         [...fila].forEach((casilla) => { //[...value] conver the html conetion to a array
             casilla.addEventListener("click", (() => {
                 let pos = casilla.id;
-                first_mine(pos, casilla);
+                first_mine(pos,state);
             }));
         });
     })
 }    
 
-function first_mine(pos, casilla){
+function first_mine(pos, state){
     let place = document.getElementById(pos).innerHTML;
 
     if (place === "J"){
@@ -191,7 +191,10 @@ function first_mine(pos, casilla){
         return 0
     }
 
-    let pos_abya = get_adyacentes(pos, casilla);
+    let pos_abya = get_adyacentes(pos);
+    if(pos_abya === true){
+        return 0
+    }
     let count = 0
     pos_abya.forEach((elementos) => {
         let elem =document.getElementById(elementos).innerHTML;
@@ -203,8 +206,7 @@ function first_mine(pos, casilla){
     if (count != 0){
         document.getElementById(pos).innerHTML = count;
     }else{
-        return "hello"
-        // space_whites(pos);
+        space_whites(pos);
     }
 }
 
@@ -212,73 +214,116 @@ function space_whites(pos){
 
 
     let pos_abya = get_adyacentes(pos);
-    console.log(pos_abya);
-    // let count = 0
-    // pos_abya.forEach((elementos) => {
-    //     let elem =document.getElementById(elementos).innerHTML;
-    //     if (elem === "J"){
-    //         count++;
-    //     }
-    // })
+    if(pos_abya === true){
+        return 0
+    }
+    let count = 0
+    pos_abya.forEach((elementos) => {
+        let elem =document.getElementById(elementos).innerHTML;
+        if (elem === "J"){
+            count++;
+        }
+    })
     
-    // if (count != 0){
-    //     document.getElementById(pos).innerHTML = count;
-    // }else{
-    //     document.getElementById(pos).innerHTML = "";
-    // }
+    if (count != 0){
+        document.getElementById(pos).innerHTML = count;
+        return 0
+    }else{
+        console.log("aqui");
+        document.getElementById(pos).innerHTML = "";
+        pos_abya.forEach((pos)=>{
+            console.log(pos);
+            space_whites(pos);
+        })
+    }
 }
 
 
-function get_adyacentes(pos, casilla){
+function get_adyacentes(pos){
     let array_pos = [];
     let array_state = [];
     switch(pos.length){
         case 2:
+            if (board_state[pos[0]][pos[1]] === 1 & board[pos[0]][pos[1]].innerHTML != ""){
+                return true
+            }else{
+                board_state[pos[0]][pos[1]] = 1;
+            }
             seeker.forEach((see) => {
                 let x = Number(pos[0]) + see[0];
                 let y = Number(pos[1]) + see[1];
                 if (x < 0 || y < 0 || x > board_state[0].length - 1 || y > board_state.length - 1){
                     return 0
                 }
-                array_pos.push(x.toString() + y.toString());
+                if (x > 9){
+                    array_pos.push(x.toString() + "+" + y.toString());
+                }else{
+                    array_pos.push(x.toString() + y.toString());
+                }
                 if (board_state[x][y] === 1){
                     return true
                 };
-                board_state[x][y] = 1;
             })
             return array_pos
             break;
             
         case 3:
-            board.forEach((places) => {
-                console.log([...places].indexOf(casilla));
-            });
+            if(board_state[pos[0]][pos[1] + pos[2]] === 1 & board[pos[0]][pos[1] + pos[2]].innerHTML != ""){
+                return true
+            }else{
+                board_state[pos[0]][pos[1] + pos[2]] = 1;
+            }
             seeker.forEach((see) => {
                 let x = Number(pos[0]) + see[0];
                 let y = Number(pos[1] + pos[2]) + see[1];
                 if (x < 0 || y < 0 || x > board_state[0].length - 1 || y > board_state.length - 1){
                     return 0
                 }
-                array_pos.push(x.toString() + y.toString());
-                if (board_state[x][y] === 1){
-                    return true
-                };
-                board_state[x][y] = 1;
+                if (x > 9){
+                    array_pos.push(x.toString() + "+" + y.toString());
+                }else{
+                    array_pos.push(x.toString() + y.toString());
+                }
+            })
+            return array_pos
+            break;
+        case 4:
+            if(board_state[pos[0] + pos[1]][pos[3]] === 1 & board[pos[0] + pos[1]][pos[3]].innerHTML != ""){
+                return true
+            }else{
+                board_state[pos[0] + pos[1]][pos[3]] = 1;
+            }
+            seeker.forEach((see) => {
+                let x = Number(pos[0] + pos[1]) + see[0];
+                let y = Number(pos[3]) + see[1];
+                if (x < 0 || y < 0 || x > board_state[0].length - 1 || y > board_state.length - 1){
+                    return 0
+                }
+                if (x > 9){
+                    array_pos.push(x.toString() + "+" + y.toString());
+                }else{
+                    array_pos.push(x.toString() + y.toString());
+                }
             })
             return array_pos
             break;
         case 5:
+            if(board_state[pos[0] + pos[1]][pos[3] + pos[4]] === 1 & board[pos[0] + pos[1]][pos[3] + pos[4]].innerHTML != ""){
+                return true
+            }else{
+                board_state[pos[0] + pos[1]][pos[3] + pos[4]] = 1;
+            }
             seeker.forEach((see) => {
                 let x = Number(pos[0] + pos[1]) + see[0];
                 let y = Number(pos[3] + pos[4]) + see[1];
                 if (x < 0 || y < 0 || x > board_state[0].length - 1 || y > board_state.length - 1){
                     return 0
                 }
-                array_pos.push(x.toString() + y.toString());
-                if (board_state[x][y] === 1){
-                    return true
-                };
-                board_state[x][y] = 1;
+                if (x > 9){
+                    array_pos.push(x.toString() + "+" + y.toString());
+                }else{
+                    array_pos.push(x.toString() + y.toString());
+                }
             })
             return array_pos
             break;
